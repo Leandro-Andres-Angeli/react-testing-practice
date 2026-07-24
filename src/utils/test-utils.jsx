@@ -1,8 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
+ 
 import { setupStore } from '../store/store';
+import { MemoryRouter } from 'react-router-dom';
+ 
 
 export function renderWithProviders(
   ui,

@@ -5,17 +5,11 @@ import { renderWithProviders } from '../../utils/test-utils';
 import { TodoItem } from '../../components/TodoItem';
 import * as todoSlice from '../../store/todoSlice';
 
-jest.mock('../../store/todoSlice', () => ({
-  ...jest.requireActual('../../store/todoSlice'),
-  updateTodo: jest.fn(),
-  deleteTodo: jest.fn(),
-}));
-
 describe('TodoItem Component', () => {
   const mockTodo = { id: '1', title: 'Buy groceries', completed: false, important: false };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
   it('renders todo correctly', () => {
@@ -27,6 +21,11 @@ describe('TodoItem Component', () => {
 
   it('shows save button when title is edited and dispatches update on click', async () => {
     const user = userEvent.setup();
+    const updateTodoSpy = jest.spyOn(todoSlice, 'updateTodo').mockImplementation((todo) => ({
+      type: 'todos/updateTodo',
+      payload: todo,
+    }));
+
     renderWithProviders(<TodoItem todo={mockTodo} />);
     
     const input = screen.getByRole('textbox', { name: /todo title/i });
@@ -37,7 +36,7 @@ describe('TodoItem Component', () => {
     expect(saveButton).toBeInTheDocument();
 
     await user.click(saveButton);
-    expect(todoSlice.updateTodo).toHaveBeenCalledWith({
+    expect(updateTodoSpy).toHaveBeenCalledWith({
       ...mockTodo,
       title: 'Buy milk'
     });

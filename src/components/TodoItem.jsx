@@ -4,7 +4,7 @@ import { updateTodo, deleteTodo } from '../store/todoSlice';
 
 export const TodoItem = ({ todo }) => {
   const dispatch = useDispatch();
-  const savingId = useSelector(state => state.todos.savingId);
+  const savingId = useSelector((state) => state.todos?.savingId ?? null);
   
   const [title, setTitle] = useState(todo.title);
   const [completed, setCompleted] = useState(todo.completed);
