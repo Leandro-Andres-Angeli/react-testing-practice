@@ -1,7 +1,9 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+ 
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../store/authSlice';
+import { Link, useNavigate } from 'react-router-dom';
+ 
 
 export const Header = () => {
   const token = useSelector(state => state.auth.token);
