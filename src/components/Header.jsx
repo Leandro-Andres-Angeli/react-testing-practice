@@ -16,7 +16,7 @@ export const Header = () => {
   return (
     <nav style={{ padding: '10px', background: '#eee', display: 'flex', gap: '15px' }}>
       <Link to="/">Home</Link>
-      <p>Test</p>
+      
       {token ? (
         <>
           <Link to="/todos">Todos</Link>
