@@ -5,16 +5,18 @@ export const fetchTodos = createAsyncThunk('todos/fetchTodos', async () => await
 export const createTodo = createAsyncThunk('todos/createTodo', async (todo) => await api.createTodo(todo));
 export const updateTodo = createAsyncThunk('todos/updateTodo', async (todo) => await api.updateTodo(todo));
 export const deleteTodo = createAsyncThunk('todos/deleteTodo', async (id) => await api.deleteTodo(id));
-
-const todoSlice = createSlice({
+export const initialState = { items: [], status: 'idle', savingId: null }
+export const todoSlice = createSlice({
   name: 'todos',
-  initialState: { items: [], status: 'idle', savingId: null },
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchTodos.pending, (state) => { state.status = 'loading'; })
       .addCase(fetchTodos.fulfilled, (state, action) => { state.status = 'succeeded'; state.items = action.payload; })
-      .addCase(updateTodo.pending, (state, action) => { state.savingId = action.meta.arg.id; })
+      .addCase(updateTodo.pending, function(state, action) { 
+       
+        state.savingId = action.meta.arg.id })
       .addCase(updateTodo.fulfilled, (state, action) => {
         state.savingId = null;
         const index = state.items.findIndex(t => t.id === action.payload.id);

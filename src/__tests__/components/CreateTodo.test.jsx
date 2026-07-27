@@ -82,7 +82,7 @@ describe("Create Todo tests ", () => {
     render(<MockCreateTodo store={store}></MockCreateTodo>);
     const todoInput = screen.getByPlaceholderText(/What needs to be done/i);
     fireEvent.change(todoInput, { target: { value: "Buy groceries" } });
-    console.log(todoInput.value);
+    
     expect(todoInput.value).toBe("Buy groceries");
   });
   it("Should navigate to 'todos' page after succesful todo creation ", async () => {
@@ -94,9 +94,9 @@ describe("Create Todo tests ", () => {
     expect(todoInput.value).toBe("Buy groceries");
     const submitBtn = screen.getByRole("button", { name: /create/i });
     await fireEvent.click(submitBtn);
-    await waitFor(async () => {
-      expect(await mockNavigate).toHaveBeenCalledWith("/todos");
-      screen.debug();
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/todos");
+      
     });
   });
 });
